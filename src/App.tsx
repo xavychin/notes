@@ -1,35 +1,73 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./style/App.css";
+import Header from "./components/header.tsx";
+import Note from "./components/note.tsx";
+import DropDown from "./components/dropdown.tsx";
+import ToDoList from "./components/todolist.tsx";
+
+interface NoteProps {
+  uniqueNotes: string[];
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [list, setList] = useState<{ id: number; text: string }[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const uniqueNotes = list;
+
+  const handleAddNote = (item: string) => {
+    const newNote = {
+      id: Date.now(),
+      text: item,
+    };
+
+    setList((prevList) => [...prevList, newNote]);
+    setShowDropdown(false);
+  };
+
+  const handleDeleteNote = (idToDelete: number) => {
+    setList((prevList) => prevList.filter((note) => note.id !== idToDelete));
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header />
+      <div className="grid-container">
+        {uniqueNotes.map((note) =>
+          note.text === "Note" ? (
+            <Note
+              key={note.id}
+              noteId={note.id}
+              onDelete={() => handleDeleteNote(note.id)}
+            />
+          ) : (
+            <ToDoList
+              key={note.id}
+              noteId={note.id}
+              onDelete={() => handleDeleteNote(note.id)}
+            />
+          )
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <div
+        className="dropdown-div"
+        onMouseEnter={() => setShowDropdown(true)}
+        onMouseLeave={() => setShowDropdown(false)}
+      >
+        <button
+          onClick={() => setShowDropdown((prev) => !prev)}
+          className="add-button"
+        >
+          +
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        {showDropdown && (
+          <div className="dropdown-button-container">
+            <DropDown addItem={handleAddNote} options={["Note", "ToDoList"]} />
+          </div>
+        )}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
