@@ -1,0 +1,47 @@
+/* Normal note CSS below*/
+.list-item {
+  display: grid;
+  grid-template-columns: 10% 90%;
+}
+
+/* Popup CSS below */
+.note-grid-container {
+  display: grid;
+  grid-template-columns: 90% 10%;
+}
+
+.task-label,
+.note-grid-container ul {
+  grid-column: 1 / span 2;
+}
+
+.task-input {
+  grid-column: 1 / span 1;
+}
+
+.add-task-btn {
+  grid-column: 2 / span 1;
+}
+
+.task-list {
+  padding: 0;
+}
+
+.task-checkbox {
+  grid-column: 1 / span 1;
+}
+
+.task-content {
+  grid-column: 2 / span 1;
+}
+
+.delete-task-btn {
+  grid-column: 3 / span 1;
+}
+
+.list-item-popup {
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  /*list-style-type: disc;
+  list-style-position: inside;*/
+}

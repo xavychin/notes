@@ -71,9 +71,9 @@ function note({
         <button onClick={() => onDelete(noteId)} className="delete-button">
           x
         </button>
-        <p className="text-note">
+        <div className="text-note">
           {!text && !title ? <i>{placeholder}</i> : text}
-        </p>
+        </div>
         {isEditing && (
           <div className="popup-overlay">
             <div
@@ -101,9 +101,11 @@ function note({
                 onChange={handleTitleChange}
                 value={title}
                 type="text"
+                autoFocus={title === ""}
               />
               <label htmlFor="note-content">Content: </label>
               <textarea
+                autoFocus={title !== ""}
                 id="note-content"
                 className="note-input"
                 value={text}

@@ -3,7 +3,7 @@ import "./style/App.css";
 import Header from "./components/header.tsx";
 import Note from "./components/note.tsx";
 import DropDown from "./components/dropdown.tsx";
-import ToDoList from "./components/todolist.tsx";
+import ToDoList from "./components/checklist.tsx";
 
 interface NoteProps {
   uniqueNotes: string[];

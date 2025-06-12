@@ -5,6 +5,7 @@ import React, {
   type KeyboardEvent,
 } from "react";
 import "../style/note.css";
+import "../style/checklist.css";
 
 interface NoteProps {
   placeholder?: string;
@@ -23,6 +24,7 @@ function note({
   const [text, setText] = useState<string[]>([]);
   const [task, setTask] = useState("");
   const [title, setTitle] = useState(initialTitle);
+  const [checkboxState, setCheckboxState] = useState(false);
 
   const todocontent = text;
 
@@ -68,6 +70,14 @@ function note({
     setText((prevList) => prevList.filter((_, idx) => idx !== indexToDelete));
   };
 
+  const handleCheckBoxState = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckboxState(e.target.checked);
+  };
+
+  const handlePreventChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="note-outer">
       <div className="note-inner" onClick={handleClick}>
@@ -77,17 +87,25 @@ function note({
         <button onClick={() => onDelete(noteId)} className="delete-button">
           x
         </button>
-        <p className="text-note">
+        <div className="text-note">
           {!text.length && !title ? (
             <i>{placeholder}</i>
           ) : (
-            <ul>
+            <ul className="task-list">
               {text.map((item, idx) => (
-                <li key={idx}>{item}</li>
+                <li className="list-item" key={idx}>
+                  <input
+                    checked={checkboxState}
+                    onChange={handlePreventChange}
+                    className="task-checkbox"
+                    type="checkbox"
+                  ></input>
+                  <span className="task-content">{item}</span>
+                </li>
               ))}
             </ul>
           )}
-        </p>
+        </div>
         {isEditing && (
           <div className="popup-overlay">
             <div
@@ -110,28 +128,57 @@ function note({
               </button>
               <label htmlFor="note-title">Title: </label>
               <input
+                autoFocus={title === ""}
                 id="note-title"
                 className="title-input"
                 onChange={handleTitleChange}
                 value={title}
                 type="text"
               />
-              <label htmlFor="note-content">Task: </label>
-              <input
-                type="text"
-                id="note-content"
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
-              ></input>
-              <button onClick={handleAddTask}>+</button>
-              <ul>
-                {todocontent.map((item, index) => (
-                  <li>
-                    {item}
-                    <button onClick={() => handleDeleteTask(index)}>-</button>
-                  </li>
-                ))}
-              </ul>
+              <div className="note-grid-container">
+                <label className="task-label" htmlFor="note-content">
+                  Task:
+                </label>
+                <input
+                  autoFocus={title !== ""}
+                  className="task-input"
+                  type="text"
+                  id="note-content"
+                  value={task}
+                  onChange={(e) => setTask(e.target.value)}
+                ></input>
+                <button className="add-task-btn" onClick={handleAddTask}>
+                  +
+                </button>
+                <ul className="task-list">
+                  {todocontent.map((item, index) => (
+                    <li key={index} className="list-item-popup">
+                      <input
+                        checked={checkboxState}
+                        onChange={handleCheckBoxState}
+                        className="task-checkbox"
+                        type="checkbox"
+                      ></input>
+                      <span className="task-content">{item}</span>
+                      <button
+                        className="delete-task-btn"
+                        onClick={() => handleDeleteTask(index)}
+                      >
+                        -
+                      </button>
+                      {/*<div className="list-item">
+                        <span className="task-content">{item}</span>
+                        <button
+                          className="delete-task-btn"
+                          onClick={() => handleDeleteTask(index)}
+                        >
+                          -
+                        </button>
+                      </div>*/}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         )}
