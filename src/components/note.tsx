@@ -7,34 +7,28 @@ import React, {
 import "../style/note.css";
 
 interface NoteProps {
-  initialText?: string;
   placeholder?: string;
-  onDelete: (noteIndexToDelete: number) => void;
   noteId: number;
-  initialTitle?: string;
-  title_placeholder?: string;
+  content: string;
+  title: string;
+  onDelete: (noteIndexToDelete: number) => void;
+  onContentChange: (newContent: string) => void;
+  onTitleChange: (newTitle: string) => void;
+  isEditing: boolean;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
 function note({
-  initialText = "",
   placeholder = "Click to edit note...",
   onDelete,
   noteId,
-  initialTitle = "",
-  title_placeholder = "Click to edit title...",
+  content,
+  title,
+  onTitleChange,
+  onContentChange,
+  isEditing,
+  setIsEditing,
 }: NoteProps) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(initialText);
-  const [title, setTitle] = useState(initialTitle);
-
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-  };
-
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" || e.key === "Escape") {
       setIsEditing(false);
@@ -65,15 +59,15 @@ function note({
   return (
     <div className="note-outer">
       <div className="note-inner" onClick={handleClick}>
-        <span className="title-note">
-          <b>{title}</b>
-        </span>
         <button onClick={() => onDelete(noteId)} className="delete-button">
           x
         </button>
-        <div className="text-note">
-          {!text && !title ? <i>{placeholder}</i> : text}
-        </div>
+        <p className="title-note">
+          <b>{title}</b>
+        </p>
+        <p className="text-note">
+          {!content && !title ? <i>{placeholder}</i> : content}
+        </p>
         {isEditing && (
           <div className="popup-overlay">
             <div
@@ -94,22 +88,27 @@ function note({
               >
                 x
               </button>
-              <label htmlFor="note-title">Title: </label>
+              {
+                //<label htmlFor="note-title">Title: </label>
+              }
               <input
+                maxLength={40}
                 id="note-title"
                 className="title-input"
-                onChange={handleTitleChange}
+                onChange={(e) => onTitleChange(e.target.value)}
                 value={title}
                 type="text"
                 autoFocus={title === ""}
               />
-              <label htmlFor="note-content">Content: </label>
+              {
+                //<label htmlFor="note-content">Content: </label>
+              }
               <textarea
+                value={content}
+                onChange={(e) => onContentChange(e.target.value)}
                 autoFocus={title !== ""}
                 id="note-content"
                 className="note-input"
-                value={text}
-                onChange={handleChange}
               />
             </div>
           </div>

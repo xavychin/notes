@@ -1,19 +1,9 @@
-.grid-header-container {
-  text-align: center;
-  display: grid;
-  grid-template-columns: 30% 40% 30%;
-  background-color: lightgrey;
-}
-
-.header-title {
-  grid-column: 2 / span 1;
-}
-
-.header-date {
-  grid-column: 3 / span 1;
-  margin: auto 0;
-}
-
-.header-date > * {
-  margin: 0;
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-color);
+  color: var(--text-color);
+  width: 100vw;
+  box-sizing: border-box;
 }

@@ -1,22 +1,50 @@
-.grid-container{
-    display: grid;
-    grid-template-columns: 50% 50%;
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  padding: 2em;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+  justify-items: center;
 }
 
-.add-button{
-    z-index: 2;
+.add-button {
+  position: fixed;
+  bottom: 3vh;
+  right: 3vh;
+  z-index: 1;
+  --bg-color: #4a90e2;
+  background-color: var(--bg-color);
+  width: 48px;
+  height: 48px;
+  font-size: 1.5em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  border: none;
+  border-radius: 50%;
 }
 
-.dropdown-div{
-    position: fixed;
-    bottom: 3vh;
-    right: 3vh;
-    z-index: 1;
+.toggle-button {
+  position: fixed;
+  bottom: 3vh;
+  left: 3vh;
+  z-index: 1;
+  --bg-color: #4a90e2;
+  background: var(--bg-color);
+  width: 48px;
+  height: 48px;
+  font-size: 1.5em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  border: none;
+  border-radius: 50%;
 }
 
-.dropdown-button-container{
-    position: absolute;
-    z-Index: 2;
-    bottom: 100%;
-    right: 0;
+.add-button:hover,
+.toggle-button:hover {
+  background: var(--button-hover-bg, #357ab8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }

@@ -1,23 +1,15 @@
-import React from "react";
+import SearchBar from "./searchbar.tsx";
 import "../style/header.css";
 
-function header() {
-  const now = new Date();
+interface HeaderProps {
+  searchText: string;
+  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const day = now.toLocaleDateString("en-US", { weekday: "long" });
-  const date = now.toLocaleDateString("en-US");
-  const time = now.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
+function header({ searchText, onSearch }: HeaderProps) {
   return (
-    <div className="grid-header-container">
-      <h2 className="header-title">~TO DO LIST~</h2>
-      <div className="header-date">
-        <h4>{day + ", " + date}</h4>
-        <h4>{time}</h4>
-      </div>
+    <div className="header-container">
+      <SearchBar searchText={searchText} onSearch={onSearch} />
     </div>
   );
 }
