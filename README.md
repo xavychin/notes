@@ -23,7 +23,7 @@ A simple web app for note taking. This app was developed to practice CRUD operat
 
 ## Website Link
 
-https://xavychin.github.io/notes/
+Test the website here: https://xavychin.github.io/notes/
 
 ## Setup & Installation
 
