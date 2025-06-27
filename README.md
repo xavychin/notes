@@ -21,6 +21,10 @@ A simple web app for note taking. This app was developed to practice CRUD operat
 - **Modern Styling:** Utilized CSS Grid and custom scrollbars for a clean, responsive layout.
 - **User Experience:** Supports dark mode and consistent button sizing for a polished interface.
 
+## Website Link
+
+https://xavychin.github.io/notes/
+
 ## Setup & Installation
 
 1. **Clone the repository:**
